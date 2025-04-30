@@ -1,9 +1,9 @@
 package utils;
 
 public class ProduceAndConsume {
-    private final Buffer<Product> buffer;
+    private final Buffer<?> buffer;
 
-    public ProduceAndConsume(Buffer<Product> buffer) {
+    public ProduceAndConsume(Buffer<?> buffer) {
         this.buffer = buffer;
     }
 
@@ -19,9 +19,9 @@ public class ProduceAndConsume {
                     }
                 }
 
-                    Product product = new Product(productP);
-                    buffer.getBuffer().add(product);
-                    System.out.println("Produzido: " + product);
+                    //Product product = new Product(productP);
+                  //  buffer.getBuffer().add(product);
+                  //  System.out.println("Produzido: " + product);
                     notify();
                     productP++;
 
