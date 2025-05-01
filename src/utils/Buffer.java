@@ -1,27 +1,23 @@
 package utils;
 
-import java.util.Queue;
-import java.util.concurrent.ArrayBlockingQueue;
 
 public class Buffer<T> {
-    private final Queue<T> BUFFER;
-    private final int CAPACITY;
+    private T[][] buffer;
 
-    public Buffer(int maxCapacity) {
-        BUFFER = new ArrayBlockingQueue<>(maxCapacity);
-        CAPACITY = maxCapacity;
+    public Buffer(int size) {
+        INITIALIZE(size);
     }
 
-    public Queue<T> getBuffer() {
-        return BUFFER;
+    private void INITIALIZE(int size) {
+        int rows = size / 5;
+
     }
 
-    public int getCapacity() {
-        return CAPACITY;
+    public T get(int x, int y) {
+        return buffer[x][y];
     }
 
-
-    public boolean isFull(){
-        return BUFFER.size() == CAPACITY;
+    public T[][] getBuffer() {
+        return buffer;
     }
 }

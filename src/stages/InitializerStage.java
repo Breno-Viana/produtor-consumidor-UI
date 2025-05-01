@@ -4,14 +4,14 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 import utils.Buffer;
-import utils.ProduceAndConsume;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class InitializerStage {
     private Buffer<?> buffer;
-    private ProduceAndConsume produceAndConsume;
+    private RunningStage runningStage = new RunningStage();
     private final double containerHeight = 650;
     private final double containerWidth = 1100;
 
@@ -41,7 +41,7 @@ public class InitializerStage {
 
         Slider slider = getSlider();
         Label label = new Label(labelText);
-        Button initialize = getInitialize(capacity);
+        Button initialize = getInitialize(capacity,stage);
 
         AnchorPane.setLeftAnchor(slider, (containerWidth - 410) / 2);
         AnchorPane.setTopAnchor(slider, (containerHeight - 200) / 2);
@@ -61,12 +61,11 @@ public class InitializerStage {
 
         root.getChildren().addAll(label, initialize, slider);
 
-
         stage.setScene(scene);
         stage.show();
     }
 
-    private Button getInitialize(AtomicInteger capacity) {
+    private Button getInitialize(AtomicInteger capacity,Stage stage) {
         Button initialize = new Button("Clique para Iniciar");
         initialize.setStyle(buttonStyle);
         initialize.setOnMouseEntered(e -> {
@@ -76,9 +75,9 @@ public class InitializerStage {
             initialize.setStyle(buttonStyle);
         });
         initialize.setOnAction(e -> {
-            if (capacity.get() == 0 || capacity.get() < 5) {
-                System.out.println("Erro ao iniciar");
-            }else System.out.println("Iniciado "+ capacity.get());
+           buffer = new Buffer<>(capacity.get());
+            Window window = stage.getScene().getWindow();
+            runningStage.run((Stage) window,capacity.get());
         });
         return initialize;
     }
