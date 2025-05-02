@@ -10,7 +10,6 @@ import utils.Buffer;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class InitializerStage {
-    private Buffer<?> buffer;
     private RunningStage runningStage = new RunningStage();
     private final double containerHeight = 650;
     private final double containerWidth = 1100;
@@ -37,6 +36,7 @@ public class InitializerStage {
         AtomicInteger capacity = new AtomicInteger(5);
         AnchorPane root = new AnchorPane();
         root.setPrefSize(containerWidth, containerHeight);
+        root.setStyle("-fx-background-color: rgba(124,124,245,0.76)");
         Scene scene = new Scene(root);
 
         Slider slider = getSlider();
@@ -57,6 +57,7 @@ public class InitializerStage {
             label.setText(labelText + capacity.get());
 
         });
+
         label.setStyle(labelStyle);
 
         root.getChildren().addAll(label, initialize, slider);
@@ -75,8 +76,8 @@ public class InitializerStage {
             initialize.setStyle(buttonStyle);
         });
         initialize.setOnAction(e -> {
-           buffer = new Buffer<>(capacity.get());
             Window window = stage.getScene().getWindow();
+            //System.out.println(capacity.get());
             runningStage.run((Stage) window,capacity.get());
         });
         return initialize;

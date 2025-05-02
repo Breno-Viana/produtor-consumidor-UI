@@ -27,6 +27,7 @@ public class PrimerStage{
 
     public static void start(Stage stage) throws Exception {
         AnchorPane root = new AnchorPane();
+        root.setStyle("-fx-background-color: rgba(124,124,245,0.76)");
         Scene scene = new Scene(root, containerWidth, containerHeight);
 
         Label ST = new Label("Podutor e Consumidor");
