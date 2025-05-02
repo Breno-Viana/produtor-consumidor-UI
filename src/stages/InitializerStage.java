@@ -5,7 +5,6 @@ import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.stage.Window;
-import utils.Buffer;
 
 import java.util.concurrent.atomic.AtomicInteger;
 

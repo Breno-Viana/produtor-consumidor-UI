@@ -22,4 +22,7 @@ public class Images {
     public static Image GET_BOX() {
         return new Image("./imgs/caixa.png");
     }
+
+    public static Image GET_EMPTY(){return new Image("./imgs/img.png");}
+
 }
