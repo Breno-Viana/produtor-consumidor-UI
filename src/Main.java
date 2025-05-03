@@ -2,7 +2,7 @@ import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
-import stages.PrimerStage;
+import views.PrimerStage;
 
 public class Main extends Application {
 

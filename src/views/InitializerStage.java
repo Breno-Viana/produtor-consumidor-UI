@@ -1,4 +1,4 @@
-package stages;
+package views;
 
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -40,7 +40,7 @@ public class InitializerStage {
 
         Slider slider = getSlider();
         Label label = new Label(labelText);
-        Button initialize = getInitialize(capacity,stage);
+        Button initialize = getInitialize(capacity, stage);
 
         AnchorPane.setLeftAnchor(slider, (containerWidth - 410) / 2);
         AnchorPane.setTopAnchor(slider, (containerHeight - 200) / 2);
@@ -52,9 +52,15 @@ public class InitializerStage {
         AnchorPane.setLeftAnchor(initialize, (containerWidth - 250) / 2);
 
         slider.valueProperty().addListener((observable, oldValue, newValue) -> {
-            capacity.set(newValue.intValue());
-            label.setText(labelText + capacity.get());
+            int newVal = newValue.intValue();
+            int roundedValue = ((newVal + 2) / 5) * 5;
 
+
+            if (roundedValue != capacity.get()) {
+                capacity.set(roundedValue);
+                slider.setValue(roundedValue);
+                label.setText(labelText + roundedValue);
+            }
         });
 
         label.setStyle(labelStyle);
@@ -65,7 +71,7 @@ public class InitializerStage {
         stage.show();
     }
 
-    private Button getInitialize(AtomicInteger capacity,Stage stage) {
+    private Button getInitialize(AtomicInteger capacity, Stage stage) {
         Button initialize = new Button("Clique para Iniciar");
         initialize.setStyle(buttonStyle);
         initialize.setOnMouseEntered(e -> {
@@ -77,17 +83,21 @@ public class InitializerStage {
         initialize.setOnAction(e -> {
             Window window = stage.getScene().getWindow();
             //System.out.println(capacity.get());
-            runningStage.run((Stage) window,capacity.get());
+            runningStage.run((Stage) window, capacity.get());
         });
         return initialize;
     }
 
 
     private Slider getSlider() {
-        Slider slider = new Slider(5, 20, 1);
+        Slider slider = new Slider(5, 20, 5);
+
         slider.setShowTickLabels(true);
         slider.setShowTickMarks(true);
-        slider.setMajorTickUnit(1);
+        slider.setBlockIncrement(5);
+        slider.setValue(5);
+        slider.setMajorTickUnit(5);
+        slider.setMinorTickCount(0);
         slider.setStyle(sliderStyle);
         return slider;
     }

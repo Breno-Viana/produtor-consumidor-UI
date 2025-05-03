@@ -1,4 +1,4 @@
-package stages;
+package views;
 
 
 import javafx.scene.Scene;
