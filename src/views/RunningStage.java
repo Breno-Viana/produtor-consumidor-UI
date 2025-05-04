@@ -1,17 +1,19 @@
 package views;
 
+
+import javafx.application.Platform;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import utils.LimitedBuffer;
-
-import java.util.concurrent.atomic.AtomicInteger;
+import utils.ProducerAndConsumer;
 
 
 public class RunningStage {
     private LimitedBuffer buffer;
-    private static final int ELEMENTS_PER_ROW = 5;
     private static final int H_SIZE = 1300;
     private static final int V_SIZE = 850;
     private static final int CABINET_H = 400;
@@ -19,7 +21,7 @@ public class RunningStage {
 
     public void run(Stage stage, int capacity) {
         buffer = new LimitedBuffer(capacity);
-        //System.out.println(capacity);
+
         all();
         AnchorPane root = new AnchorPane();
         root.setStyle("-fx-background-color: rgba(124,124,245,0.76)");
@@ -33,21 +35,33 @@ public class RunningStage {
         AnchorPane.setLeftAnchor(cabinet, (double) 380 / 2);
         AnchorPane.setTopAnchor(cabinet, 160.0);
 
-        AtomicInteger r = new AtomicInteger();
-        AtomicInteger c = new AtomicInteger();
+
+        Label state = new Label("Running");
+        state.setStyle("-fx-font-size: 40px;" +
+                "-fx-text-fill: #000");
+
+
+        AnchorPane.setLeftAnchor(state, (double)(H_SIZE-120)/ 2);
+        AnchorPane.setTopAnchor(state, 30.0);
+
+        Button stop = new Button("Stop");
+        stop.setStyle("-fx-font-size: 20px;");
 
 
 
-        root.getChildren().addAll(cabinet);
+
+        root.getChildren().addAll(state,stop,cabinet);
         stage.setScene(new Scene(root, H_SIZE, V_SIZE));
         stage.centerOnScreen();
         stage.show();
+
+
     }
 
     void all() {
-        for (int i = 0; i <5 ; i++) {
-            for (int j = 0; j <5 ; j++) {
-                buffer.add(i,j);
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 5; j++) {
+                buffer.add(i, j);
             }
         }
     }

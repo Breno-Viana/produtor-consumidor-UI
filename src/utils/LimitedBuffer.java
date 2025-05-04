@@ -2,6 +2,7 @@ package utils;
 
 
 import imgs.Images;
+import javafx.geometry.Bounds;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 
@@ -13,7 +14,8 @@ public class LimitedBuffer extends GridPane {
     private static final int IMAGE_SIZE = 80;
     private static final int H_GAP = 130;
     private static final int V_GAP = 30;
-    ;
+
+
     private final ImageView[][] buffSlots;
 
     public LimitedBuffer(int capacity) {
@@ -22,6 +24,17 @@ public class LimitedBuffer extends GridPane {
         CAPACITY = capacity;
         setHgap(H_GAP);
         setVgap(V_GAP);
+       // setGridLinesVisible(true);
+        initializeEmptySlots();
+    }
+
+    private void initializeEmptySlots() {
+        for (int i = 0; i < ROWS; i++) {
+            for (int j = 0; j < COLS; j++) {
+                buffSlots[i][j] = generateEmpty();
+                add(buffSlots[i][j], j, i);
+            }
+        }
     }
 
     public boolean add() {
@@ -34,7 +47,7 @@ public class LimitedBuffer extends GridPane {
     }
 
     public boolean add(int row, int col) {
-        if (row >= 0 && row < ROWS && col >= 0 && col < COLS && !isFull()) {
+        if (isPositionValid(row, col) && !isFull()) {
             if (isSlotEmpty(row, col)) {
                 ImageView node = generate();
                 node.setId("box");
@@ -42,6 +55,27 @@ public class LimitedBuffer extends GridPane {
                 add(node, col, row);
                 return true;
             }
+        }
+        return false;
+    }
+
+    public boolean remove() {
+        for (int i = 0; i < ROWS; i++) {
+            for (int j = 0; j < COLS; j++) {
+                if (!isSlotEmpty(i, j)) return remove(i, j);
+            }
+        }
+        return false;
+    }
+
+    public boolean remove(int row, int col) {
+        if (isPositionValid(row, col) && !isSlotEmpty(row, col)) {
+            getChildren().remove(buffSlots[row][col]);
+
+            ImageView empty = generateEmpty();
+            buffSlots[row][col] = empty;
+            add(empty, col, row);
+            return true;
         }
         return false;
     }
@@ -69,17 +103,6 @@ public class LimitedBuffer extends GridPane {
         return getSize() == CAPACITY;
     }
 
-    public boolean remove(int row, int col) {
-        if (row >= 0 && row < ROWS && col >= 0 && col < COLS && !isSlotEmpty(row, col)) {
-            getChildren().remove(buffSlots[row][col]);
-
-            ImageView empty = generateEmpty();
-            buffSlots[row][col] = empty;
-            add(empty, col, row);
-            return true;
-        }
-        return false;
-    }
 
     private ImageView generate() {
         ImageView node = new ImageView();
@@ -101,4 +124,22 @@ public class LimitedBuffer extends GridPane {
     public ImageView[][] getBuffSlots() {
         return this.buffSlots;
     }
+
+    private boolean isPositionValid(int row, int col) {
+        return row >= 0 && row < ROWS && col >= 0 && col < COLS;
+    }
+
+    public double getPositionX(int row, int col) {
+        ImageView imageView = buffSlots[row][col];
+        Bounds bounds = imageView.localToScene(imageView.getBoundsInLocal());
+        return bounds.getMinX();
+
+    }
+
+    public double getPositionY(int row, int col) {
+        ImageView imageView = buffSlots[row][col];
+        Bounds bounds = imageView.localToScene(imageView.getBoundsInLocal());
+        return bounds.getMinY();
+    }
 }
+
