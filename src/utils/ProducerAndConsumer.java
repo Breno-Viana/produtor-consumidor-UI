@@ -1,5 +1,9 @@
 package utils;
 
+import javafx.scene.Scene;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
+
 import java.util.Random;
 
 public class ProducerAndConsumer {
@@ -11,5 +15,22 @@ public class ProducerAndConsumer {
         random = new Random();
         RUNNING = true;
     }
+
+    public void consume() {
+        while (RUNNING) {
+            System.out.println(random.nextInt(10));
+        }
+    }
+
+
+
+
+    public void stop(){
+        RUNNING = false;
+    }
+    public void start(){
+        RUNNING = true;
+    }
+
 
 }

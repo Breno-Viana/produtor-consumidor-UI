@@ -12,8 +12,10 @@ import utils.LimitedBuffer;
 import utils.ProducerAndConsumer;
 
 
+
 public class RunningStage {
     private LimitedBuffer buffer;
+    private ProducerAndConsumer pc;
     private static final int H_SIZE = 1300;
     private static final int V_SIZE = 850;
     private static final int CABINET_H = 400;
@@ -21,6 +23,7 @@ public class RunningStage {
 
     public void run(Stage stage, int capacity) {
         buffer = new LimitedBuffer(capacity);
+        pc = new ProducerAndConsumer(buffer);
 
         all();
         AnchorPane root = new AnchorPane();
@@ -46,6 +49,10 @@ public class RunningStage {
 
         Button stop = new Button("Stop");
         stop.setStyle("-fx-font-size: 20px;");
+
+
+
+
 
 
 
