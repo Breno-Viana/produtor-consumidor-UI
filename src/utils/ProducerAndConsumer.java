@@ -18,7 +18,12 @@ public class ProducerAndConsumer {
 
     public void consume() {
         while (RUNNING) {
-            System.out.println(random.nextInt(10));
+            buffer.add();
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 

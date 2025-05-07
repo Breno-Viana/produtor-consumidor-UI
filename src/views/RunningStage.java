@@ -2,6 +2,7 @@ package views;
 
 
 import javafx.application.Platform;
+import javafx.concurrent.Service;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -25,7 +26,7 @@ public class RunningStage {
         buffer = new LimitedBuffer(capacity);
         pc = new ProducerAndConsumer(buffer);
 
-        all();
+       // all();
         AnchorPane root = new AnchorPane();
         root.setStyle("-fx-background-color: rgba(124,124,245,0.76)");
 
@@ -50,7 +51,12 @@ public class RunningStage {
         Button stop = new Button("Stop");
         stop.setStyle("-fx-font-size: 20px;");
 
-
+        stop.setOnAction(e -> {
+           Thread thread = new Thread(() -> {
+               pc.consume();
+           }) ;
+           thread.start();
+        });
 
 
 

@@ -14,8 +14,6 @@ public class LimitedBuffer extends GridPane {
     private static final int IMAGE_SIZE = 80;
     private static final int H_GAP = 130;
     private static final int V_GAP = 30;
-
-
     private final ImageView[][] buffSlots;
 
     public LimitedBuffer(int capacity) {
@@ -24,7 +22,6 @@ public class LimitedBuffer extends GridPane {
         CAPACITY = capacity;
         setHgap(H_GAP);
         setVgap(V_GAP);
-       // setGridLinesVisible(true);
         initializeEmptySlots();
     }
 
